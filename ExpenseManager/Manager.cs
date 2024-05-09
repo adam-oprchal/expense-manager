@@ -8,12 +8,15 @@
 
         public void Start()
         {
-            Console.WriteLine($"Welcome back, {username}!");
+            Console.WriteLine();
+            Console.WriteLine($"Welcome, {username}!");
 
             string input;
             do
             {
+                Console.WriteLine();
                 Console.WriteLine("Choose your action: log-out");
+                Console.Write($"[{username}]> ");
                 input = Console.ReadLine().Trim();
 
                 switch (input)
@@ -22,7 +25,7 @@
                         Console.WriteLine($"Goodbye, {username}!");
                         break;
                     default:
-                        Console.WriteLine("Incorrect command");
+                        Console.WriteLine("Incorrect action");
                         break;
                 }
             } while (input != "log-out");

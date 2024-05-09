@@ -6,17 +6,22 @@ namespace ExpenseManager
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Expense Manager!");
+            Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            Console.WriteLine("$$                                 $$");
+            Console.WriteLine("$$   Welcome to Expense Manager!   $$");
+            Console.WriteLine("$$                                 $$");
+            Console.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
             string input;
             do
             {
-                Console.WriteLine("Choose your action: login, register, exit");
+                Console.WriteLine();
+                Console.WriteLine("Choose your action: log-in, register, exit");
                 input = Console.ReadLine().Trim();
 
                 switch (input)
                 {
-                    case "login":
+                    case "log-in":
                         Login();
                         break;
                     case "register":
@@ -34,6 +39,9 @@ namespace ExpenseManager
 
         static void Login()
         {
+            Console.WriteLine();
+            Console.WriteLine("Please enter your username and password");
+
             Console.Write("Username: ");
             var username = Console.ReadLine();
             Console.Write("Password: ");
@@ -52,6 +60,8 @@ namespace ExpenseManager
 
         static void Register()
         {
+            Console.WriteLine();
+
             Console.Write("Choose your username: ");
             var username = Console.ReadLine();
             if (username == "")
@@ -78,7 +88,8 @@ namespace ExpenseManager
                 return;
             }
 
-            Console.WriteLine("Your account was successfully created");
+            Console.WriteLine("Registration was successful, " +
+                "please log in to continue to your account");
         }
     }
 }
