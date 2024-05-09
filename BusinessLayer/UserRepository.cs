@@ -2,9 +2,9 @@
 
 namespace BusinessLayer
 {
-    public class UserRepository
+    public static class UserRepository
     {
-        public User? AddUser(string name, string password)
+        public static User AddUser(string name, string password)
         {
             using (var db = new ExpenseDbContext())
             {
@@ -20,6 +20,18 @@ namespace BusinessLayer
                 {
                     return null;
                 }
+            }
+        }
+
+        public static User ValidateLogin(string username, string password)
+        {
+            using ( var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var user = db.Users.Single(u => u.Name == username);
+                    return password == user.HashedPassword ? user : null;
+                } catch { return null; }
             }
         }
     }
