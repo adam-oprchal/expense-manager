@@ -20,6 +20,7 @@ namespace ExpenseManager
                         Login();
                         break;
                     case "register":
+                        Register();
                         break;
                     case "exit":
                         Console.WriteLine("Exiting");
@@ -47,6 +48,37 @@ namespace ExpenseManager
 
             var manager = new Manager(user.Name);
             manager.Start();
+        }
+
+        static void Register()
+        {
+            Console.Write("Choose your username: ");
+            var username = Console.ReadLine();
+            if (username == "")
+            {
+                Console.WriteLine("Username cannot be empty");
+                Console.WriteLine("Aborting registration");
+                return;
+            }
+
+            Console.Write("Choose your password: ");
+            var password = Console.ReadLine();
+            if (password == "")
+            {
+                Console.WriteLine("Password cannot be empty");
+                Console.WriteLine("Aborting registration");
+                return;
+            }
+
+            var user = UserRepository.AddUser(username, password);
+            if (user == null)
+            {
+                Console.WriteLine("Username is already taken");
+                Console.WriteLine("Aborting registration");
+                return;
+            }
+
+            Console.WriteLine("Your account was successfully created");
         }
     }
 }
