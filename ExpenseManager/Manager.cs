@@ -18,7 +18,9 @@ namespace ExpenseManager
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("Choose your action: add-expense, add-income, log-out");
+                Console.WriteLine("Choose your action: add-expense, add-income, " +
+                    "view-all-entries, log-out");
+
                 Console.Write($"[{username}]> ");
                 input = Console.ReadLine().Trim();
 
@@ -29,6 +31,9 @@ namespace ExpenseManager
                         break;
                     case "add-income":
                         AddEntry(EntryType.Income);
+                        break;
+                    case "view-all-entries":
+                        ViewAllEntries();
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");
@@ -71,6 +76,40 @@ namespace ExpenseManager
             }
 
             Console.WriteLine($"{type} successfully added");
+        }
+
+        private void ViewAllEntries()
+        {
+            Console.WriteLine();
+
+            var entries = EntryRepository.GetAllEntries(username);
+            if (entries == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                return;
+            }
+
+            Console.WriteLine("Your current entries: ");
+            Console.WriteLine("======================================");
+            foreach (var entry in entries)
+            {
+                Console.WriteLine($"{entry.Name, -30} {entry.Type, -10} {entry.Amount}");
+            }
+            Console.WriteLine("======================================");
+
+            var income = entries
+                .Where(e => e.Type == EntryType.Income)
+                .Select(e => e.Amount)
+                .Sum();
+            var expense = entries
+                .Where(e => e.Type == EntryType.Expense)
+                .Select(e => e.Amount)
+                .Sum();
+
+            Console.WriteLine($"Total income: {income}");
+            Console.WriteLine($"Total expenses: {expense}");
+            Console.WriteLine("======================================");
+            Console.WriteLine($"Total balance: {income - expense}");
         }
     }
 }

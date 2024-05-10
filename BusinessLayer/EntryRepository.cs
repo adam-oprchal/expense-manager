@@ -23,5 +23,21 @@ namespace BusinessLayer
                 }
             }
         }
+
+        public static List<Entry> GetAllEntries(string username)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    return db.Entries
+                        .Where(e => e.UserName == username)
+                        .ToList();
+                } catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }
