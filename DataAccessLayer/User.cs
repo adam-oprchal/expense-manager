@@ -7,5 +7,6 @@ namespace DataAccessLayer
         [Key]
         public string Name { get; set; }
         public string HashedPassword { get; set; }
+        public List<Entry> Entries { get; set; }
     }
 }

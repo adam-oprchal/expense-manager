@@ -17,6 +17,7 @@ namespace ExpenseManager
             {
                 Console.WriteLine();
                 Console.WriteLine("Choose your action: log-in, register, exit");
+                Console.Write("> ");
                 input = Console.ReadLine().Trim();
 
                 switch (input)

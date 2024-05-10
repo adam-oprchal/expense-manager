@@ -7,6 +7,7 @@ namespace DataAccessLayer
         private string connectionString = @"server=(localdb)\MSSQLLocalDB;Initial Catalog = ExpenseDB; Integrated Security = true";
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Entry> Entries { get; set; }
 
         public ExpenseDbContext() : base()
         {
