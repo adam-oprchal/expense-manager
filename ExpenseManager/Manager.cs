@@ -49,15 +49,6 @@ namespace ExpenseManager
         {
             Console.WriteLine();
 
-            Console.Write($"{type} name: ");
-            var name = Console.ReadLine();
-            if (name == "")
-            {
-                Console.WriteLine($"{type} name cannot be empty");
-                Console.WriteLine($"{type} adding aborted");
-                return;
-            }
-
             Console.Write($"{type} amount: ");
             var amount = Console.ReadLine();
             if (!Int32.TryParse(amount, out int amountInt) || amountInt <= 0)
@@ -91,7 +82,10 @@ namespace ExpenseManager
                 return;
             }
 
-            var entry = EntryRepository.AddEntry(name, amountInt, 
+            Console.Write($"Your entry note (can be empty): ");
+            var note = Console.ReadLine();
+
+            var entry = EntryRepository.AddEntry(note, amountInt, 
                 categories[categoryInt - 1].Id, type);
             if (entry == null)
             {
@@ -118,7 +112,7 @@ namespace ExpenseManager
             Console.WriteLine("======================================");
             foreach (var entry in entries)
             {
-                Console.WriteLine($"{entry.Name, -30} {entry.Type, -10} {entry.Category.Name, -10} {entry.Amount}");
+                Console.WriteLine($"{entry.Type, -20} {entry.Category.Name, -15} {entry.Amount, 10}        {entry.Note}");
             }
             Console.WriteLine("======================================");
 

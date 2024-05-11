@@ -5,7 +5,7 @@ namespace BusinessLayer
 {
     public static class EntryRepository
     {
-        public static Entry AddEntry(string name, int amount, 
+        public static Entry AddEntry(string note, int amount, 
             int categoryId, EntryType type)
         {
             using (var db = new ExpenseDbContext())
@@ -14,7 +14,7 @@ namespace BusinessLayer
                 {
                     var res = db.Entries.Add(
                         new Entry 
-                        { Name = name, Amount = amount, 
+                        { Note = note, Amount = amount, 
                             CategoryId = categoryId, Type = type });
                     db.SaveChanges();
                     return res.Entity;
