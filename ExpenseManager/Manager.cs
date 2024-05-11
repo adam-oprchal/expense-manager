@@ -67,7 +67,32 @@ namespace ExpenseManager
                 return;
             }
 
-            var entry = EntryRepository.AddEntry(name, amountInt, username, type);
+            var categories = CategoryRepository.GetAllCategories(username);
+            if (categories == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine($"{type} adding aborted");
+                return;
+            }
+
+            Console.WriteLine("Your categories: ");
+            for (int i = 0;  i < categories.Count; i++)
+            {
+                Console.WriteLine($"{i+1} - {categories[i].Name}");
+            }
+
+            Console.Write("Category: ");
+            var category = Console.ReadLine();
+            if (!Int32.TryParse(category, out int categoryInt) || categoryInt <= 0 
+                || categoryInt > categories.Count)
+            {
+                Console.WriteLine($"Incorrect category");
+                Console.WriteLine($"{type} adding aborted");
+                return;
+            }
+
+            var entry = EntryRepository.AddEntry(name, amountInt, 
+                categories[categoryInt - 1].Id, type);
             if (entry == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
@@ -93,7 +118,7 @@ namespace ExpenseManager
             Console.WriteLine("======================================");
             foreach (var entry in entries)
             {
-                Console.WriteLine($"{entry.Name, -30} {entry.Type, -10} {entry.Amount}");
+                Console.WriteLine($"{entry.Name, -30} {entry.Type, -10} {entry.Category.Name, -10} {entry.Amount}");
             }
             Console.WriteLine("======================================");
 

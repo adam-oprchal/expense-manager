@@ -8,6 +8,7 @@ namespace DataAccessLayer
 
         public DbSet<User> Users { get; set; }
         public DbSet<Entry> Entries { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public ExpenseDbContext() : base()
         {

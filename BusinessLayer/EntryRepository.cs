@@ -1,11 +1,12 @@
 ﻿using DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer
 {
     public static class EntryRepository
     {
         public static Entry AddEntry(string name, int amount, 
-            string username, EntryType type)
+            int categoryId, EntryType type)
         {
             using (var db = new ExpenseDbContext())
             {
@@ -14,7 +15,7 @@ namespace BusinessLayer
                     var res = db.Entries.Add(
                         new Entry 
                         { Name = name, Amount = amount, 
-                            UserName = username, Type = type });
+                            CategoryId = categoryId, Type = type });
                     db.SaveChanges();
                     return res.Entity;
                 } catch
@@ -31,7 +32,8 @@ namespace BusinessLayer
                 try
                 {
                     return db.Entries
-                        .Where(e => e.UserName == username)
+                        .Where(e => e.Category.Username == username)
+                        .Include(e => e.Category)
                         .ToList();
                 } catch
                 {
