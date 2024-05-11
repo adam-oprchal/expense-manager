@@ -109,12 +109,14 @@ namespace ExpenseManager
             }
 
             Console.WriteLine("Your current entries: ");
-            Console.WriteLine("======================================");
+            Console.WriteLine($"{"Type", -15} {"Category", -15} {"Amount", 10}   {"Note"}");
+            Console.WriteLine("==========================================================");
             foreach (var entry in entries)
             {
-                Console.WriteLine($"{entry.Type, -20} {entry.Category.Name, -15} {entry.Amount, 10}        {entry.Note}");
+                Console.WriteLine($"{entry.Type, -15} {entry.Category.Name, -15} " +
+                    $"{entry.Amount, 10}   {entry.Note}");
             }
-            Console.WriteLine("======================================");
+            Console.WriteLine("==========================================================");
 
             var income = entries
                 .Where(e => e.Type == EntryType.Income)
@@ -125,10 +127,10 @@ namespace ExpenseManager
                 .Select(e => e.Amount)
                 .Sum();
 
-            Console.WriteLine($"Total income: {income}");
-            Console.WriteLine($"Total expenses: {expense}");
-            Console.WriteLine("======================================");
-            Console.WriteLine($"Total balance: {income - expense}");
+            Console.WriteLine($"Total income: {income, 28}");
+            Console.WriteLine($"Total expenses: {expense, 26}");
+            Console.WriteLine("==========================================================");
+            Console.WriteLine($"Total balance: {income - expense, 27}");
         }
     }
 }
