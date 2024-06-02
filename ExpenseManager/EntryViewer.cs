@@ -46,8 +46,17 @@ namespace ExpenseManager
             PrintEntries(entries);
         }
 
-        private static void ViewAllEntriesFilteredCategory()
+        private static void ViewAllEntriesFilteredCategory(
+            string username, List<Entry> entries)
         {
+            var category = CategoryPicker.PickCategory(username);
+            if (category == null) return;
+
+            entries = entries
+                .Where(e => e.CategoryId == category.Id)
+                .ToList();
+
+            PrintEntries(entries);
         }
 
         public static void ViewAllEntriesFiltered(string username)
@@ -72,7 +81,7 @@ namespace ExpenseManager
             switch (filter)
             {
                 case "1":
-                    ViewAllEntriesFilteredCategory();
+                    ViewAllEntriesFilteredCategory(username, entries);
                     break;
                 case "2":
                     Console.WriteLine($"{filter}");
