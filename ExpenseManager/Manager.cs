@@ -69,26 +69,9 @@ namespace ExpenseManager
                 return;
             }
 
-            var categories = CategoryRepository.ReadAllCategories(username);
-            if (categories == null)
+            var category = CategoryPicker.PickCategory(username);
+            if (category == null)
             {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                Console.WriteLine($"{type} adding aborted");
-                return;
-            }
-
-            Console.WriteLine("Your categories: ");
-            for (int i = 0;  i < categories.Count; i++)
-            {
-                Console.WriteLine($"  {i+1} - {categories[i].Name}");
-            }
-
-            Console.Write("Category: ");
-            var category = Console.ReadLine();
-            if (!Int32.TryParse(category, out int categoryInt) || categoryInt <= 0 
-                || categoryInt > categories.Count)
-            {
-                Console.WriteLine($"Incorrect category");
                 Console.WriteLine($"{type} adding aborted");
                 return;
             }
@@ -97,7 +80,7 @@ namespace ExpenseManager
             var note = Console.ReadLine();
 
             var entry = EntryRepository.CreateEntry(note ?? "", amountInt, 
-                categories[categoryInt - 1].Id, type);
+                category.Id, type);
             if (entry == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
