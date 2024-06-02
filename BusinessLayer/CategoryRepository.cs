@@ -19,5 +19,23 @@ namespace BusinessLayer
                 }
             }
         }
+
+        public static Category AddCategory(string name, string username)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var res = db.Categories.Add(
+                        new Category 
+                        { Name = name, Username = username });
+                    db.SaveChanges();
+                    return res.Entity;
+                } catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

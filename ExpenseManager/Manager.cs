@@ -19,7 +19,7 @@ namespace ExpenseManager
             {
                 Console.WriteLine();
                 Console.WriteLine("Choose your action: add-expense, add-income, " +
-                    "view-all-entries, log-out");
+                    "add-category, view-all-entries, log-out");
 
                 Console.Write($"[{username}]> ");
                 input = Console.ReadLine().Trim();
@@ -31,6 +31,9 @@ namespace ExpenseManager
                         break;
                     case "add-income":
                         AddEntry(EntryType.Income);
+                        break;
+                    case "add-category":
+                        AddCategory();
                         break;
                     case "view-all-entries":
                         ViewAllEntries();
@@ -131,6 +134,45 @@ namespace ExpenseManager
             Console.WriteLine($"Total expenses: {expense, 26}");
             Console.WriteLine("==========================================================");
             Console.WriteLine($"Total balance: {income - expense, 27}");
+        }
+
+        private void AddCategory()
+        {
+            Console.WriteLine();
+
+            var categories = CategoryRepository.GetAllCategories(username);
+            if (categories == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Category adding aborted");
+                return;
+            }
+
+            Console.Write($"Your new category name: ");
+            var name = Console.ReadLine();
+            if (name == "")
+            {
+                Console.WriteLine("Category name cannot be empty");
+                Console.WriteLine("Category adding aborted");
+                return;
+            }
+
+            if (categories.Select(c => c.Name).Contains(name))
+            {
+                Console.WriteLine("Category name is already in use");
+                Console.WriteLine("Category adding aborted");
+                return;
+            }
+
+            var category = CategoryRepository.AddCategory(name, username);
+            if (category == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Category adding aborted");
+                return;
+            }
+
+            Console.WriteLine("Category successfully added");
         }
     }
 }
