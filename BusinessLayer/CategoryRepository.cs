@@ -4,7 +4,7 @@ namespace BusinessLayer
 {
     public static class CategoryRepository
     {
-        public static List<Category> GetAllCategories(string username)
+        public static List<Category> ReadAllCategories(string username)
         {
             using (var db = new ExpenseDbContext())
             {
@@ -20,7 +20,7 @@ namespace BusinessLayer
             }
         }
 
-        public static Category AddCategory(string name, string username)
+        public static Category CreateCategory(string name, string username)
         {
             using (var db = new ExpenseDbContext())
             {

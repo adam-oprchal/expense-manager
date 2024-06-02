@@ -5,7 +5,7 @@ namespace BusinessLayer
 {
     public static class EntryRepository
     {
-        public static Entry AddEntry(string note, int amount, 
+        public static Entry CreateEntry(string note, int amount, 
             int categoryId, EntryType type)
         {
             using (var db = new ExpenseDbContext())
@@ -25,7 +25,7 @@ namespace BusinessLayer
             }
         }
 
-        public static List<Entry> GetAllEntries(string username)
+        public static List<Entry> ReadAllEntries(string username)
         {
             using (var db = new ExpenseDbContext())
             {

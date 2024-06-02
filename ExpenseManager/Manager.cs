@@ -61,7 +61,7 @@ namespace ExpenseManager
                 return;
             }
 
-            var categories = CategoryRepository.GetAllCategories(username);
+            var categories = CategoryRepository.ReadAllCategories(username);
             if (categories == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
@@ -88,7 +88,7 @@ namespace ExpenseManager
             Console.Write($"Your entry note (can be empty): ");
             var note = Console.ReadLine();
 
-            var entry = EntryRepository.AddEntry(note, amountInt, 
+            var entry = EntryRepository.CreateEntry(note, amountInt, 
                 categories[categoryInt - 1].Id, type);
             if (entry == null)
             {
@@ -104,7 +104,7 @@ namespace ExpenseManager
         {
             Console.WriteLine();
 
-            var entries = EntryRepository.GetAllEntries(username);
+            var entries = EntryRepository.ReadAllEntries(username);
             if (entries == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
@@ -140,7 +140,7 @@ namespace ExpenseManager
         {
             Console.WriteLine();
 
-            var categories = CategoryRepository.GetAllCategories(username);
+            var categories = CategoryRepository.ReadAllCategories(username);
             if (categories == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
@@ -164,7 +164,7 @@ namespace ExpenseManager
                 return;
             }
 
-            var category = CategoryRepository.AddCategory(name, username);
+            var category = CategoryRepository.CreateCategory(name, username);
             if (category == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");

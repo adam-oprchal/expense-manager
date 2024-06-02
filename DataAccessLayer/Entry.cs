@@ -10,7 +10,6 @@ namespace DataAccessLayer
         public int Amount { get; set; }
 
         public Category Category { get; set; }
-        [ForeignKey("Category")]
         public int CategoryId { get; set; }
     }
 }

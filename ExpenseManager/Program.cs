@@ -81,7 +81,7 @@ namespace ExpenseManager
                 return;
             }
 
-            var user = UserRepository.AddUser(username, password);
+            var user = UserRepository.CreateUser(username, password);
             if (user == null)
             {
                 Console.WriteLine("Username is already taken");

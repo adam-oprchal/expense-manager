@@ -6,7 +6,7 @@ namespace BusinessLayer
 {
     public static class UserRepository
     {
-        public static User AddUser(string name, string password)
+        public static User CreateUser(string name, string password)
         {
             var hashedPassword = Hash(password);
 
@@ -27,18 +27,27 @@ namespace BusinessLayer
             }
         }
 
-        public static User ValidateLogin(string username, string password)
+        public static User ReadUser(string username)
         {
-            var hashedPassword = Hash(password);
-
             using ( var db = new ExpenseDbContext())
             {
                 try
                 {
                     var user = db.Users.Single(u => u.Name == username);
-                    return hashedPassword == user.HashedPassword ? user : null;
+                    return user;
                 } catch { return null; }
             }
+        }
+
+        public static User ValidateLogin(string username, string password)
+        {
+            var hashedPassword = Hash(password);
+
+            var user = ReadUser(username);
+            if (user == null || user.HashedPassword != hashedPassword)
+                return null;
+
+            return user;
         }
 
         private static string Hash(string input)
