@@ -1,21 +1,13 @@
 ﻿using BusinessLayer;
 using DataAccessLayer;
+using Microsoft.Identity.Client;
 
 namespace ExpenseManager
 {
     public static class EntryViewer
     {
-        public static void ViewAllEntries(string username)
+        private static void PrintEntries(List<Entry> entries)
         {
-            Console.WriteLine();
-
-            var entries = EntryRepository.ReadAllEntries(username);
-            if (entries == null)
-            {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                return;
-            }
-
             Console.WriteLine("Your current entries: ");
             Console.WriteLine($"{"Type", -15} {"Category", -15} {"Amount", 10}   {"Note"}");
             Console.WriteLine("==========================================================");
@@ -41,6 +33,23 @@ namespace ExpenseManager
             Console.WriteLine($"Total balance: {income - expense, 27}");
         }
 
+        public static void ViewAllEntries(string username)
+        {
+            Console.WriteLine();
+
+            var entries = EntryRepository.ReadAllEntries(username);
+            if (entries == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                return;
+            }
+            PrintEntries(entries);
+        }
+
+        private static void ViewAllEntriesFilteredCategory()
+        {
+        }
+
         public static void ViewAllEntriesFiltered(string username)
         {
             Console.WriteLine();
@@ -63,7 +72,7 @@ namespace ExpenseManager
             switch (filter)
             {
                 case "1":
-                    Console.WriteLine($"{filter}");
+                    ViewAllEntriesFilteredCategory();
                     break;
                 case "2":
                     Console.WriteLine($"{filter}");
