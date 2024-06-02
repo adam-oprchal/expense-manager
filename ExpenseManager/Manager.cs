@@ -18,8 +18,13 @@ namespace ExpenseManager
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("Choose your action: add-expense, add-income, " +
-                    "add-category, view-all-entries, log-out");
+                Console.WriteLine("Choose your action: ");
+                Console.WriteLine("  add-expense");
+                Console.WriteLine("  add-income");
+                Console.WriteLine("  add-category");
+                Console.WriteLine("  view-all-entries");
+                Console.WriteLine("  view-all-entries-filtered");
+                Console.WriteLine("  log-out");
 
                 Console.Write($"[{username}]> ");
                 input = (Console.ReadLine() ?? "").Trim();
@@ -37,6 +42,9 @@ namespace ExpenseManager
                         break;
                     case "view-all-entries":
                         ViewAllEntries();
+                        break;
+                    case "view-all-entries-filtered":
+                        ViewAllEntriesFiltered();
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");
@@ -72,7 +80,7 @@ namespace ExpenseManager
             Console.WriteLine("Your categories: ");
             for (int i = 0;  i < categories.Count; i++)
             {
-                Console.WriteLine($"{i+1} - {categories[i].Name}");
+                Console.WriteLine($"  {i+1} - {categories[i].Name}");
             }
 
             Console.Write("Category: ");
@@ -134,6 +142,42 @@ namespace ExpenseManager
             Console.WriteLine($"Total expenses: {expense, 26}");
             Console.WriteLine("==========================================================");
             Console.WriteLine($"Total balance: {income - expense, 27}");
+        }
+
+        private void ViewAllEntriesFiltered()
+        {
+            Console.WriteLine();
+
+            var entries = EntryRepository.ReadAllEntries(username);
+            if (entries == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                return;
+            }
+
+            Console.WriteLine("Filters: ");
+            Console.WriteLine("  1 - Category filter");
+            Console.WriteLine("  2 - Month filter");
+            Console.WriteLine("  3 - Year filter");
+
+            Console.Write("Filter: ");
+            var filter = (Console.ReadLine() ?? "").Trim();
+
+            switch (filter)
+            {
+                case "1":
+                    Console.WriteLine($"{filter}");
+                    break;
+                case "2":
+                    Console.WriteLine($"{filter}");
+                    break;
+                case "3":
+                    Console.WriteLine($"{filter}");
+                    break;
+                default:
+                    Console.WriteLine("Incorrect filter");
+                    break;
+            }
         }
 
         private void AddCategory()
