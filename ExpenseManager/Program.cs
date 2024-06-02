@@ -18,7 +18,7 @@ namespace ExpenseManager
                 Console.WriteLine();
                 Console.WriteLine("Choose your action: log-in, register, exit");
                 Console.Write("> ");
-                input = Console.ReadLine().Trim();
+                input = (Console.ReadLine() ?? "").Trim();
 
                 switch (input)
                 {
@@ -48,6 +48,12 @@ namespace ExpenseManager
             Console.Write("Password: ");
             var password = Console.ReadLine();
 
+            if (username == null || password == null)
+            {
+                Console.WriteLine("Incorrect username or password");
+                return;
+            }
+
             var user = UserRepository.ValidateLogin(username, password);
             if (user == null)
             {
@@ -65,7 +71,7 @@ namespace ExpenseManager
 
             Console.Write("Choose your username: ");
             var username = Console.ReadLine();
-            if (username == "")
+            if (string.IsNullOrWhiteSpace(username))
             {
                 Console.WriteLine("Username cannot be empty");
                 Console.WriteLine("Aborting registration");
@@ -74,7 +80,7 @@ namespace ExpenseManager
 
             Console.Write("Choose your password: ");
             var password = Console.ReadLine();
-            if (password == "")
+            if (string.IsNullOrWhiteSpace(password))
             {
                 Console.WriteLine("Password cannot be empty");
                 Console.WriteLine("Aborting registration");

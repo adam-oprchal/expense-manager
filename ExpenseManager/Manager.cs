@@ -22,7 +22,7 @@ namespace ExpenseManager
                     "add-category, view-all-entries, log-out");
 
                 Console.Write($"[{username}]> ");
-                input = Console.ReadLine().Trim();
+                input = (Console.ReadLine() ?? "").Trim();
 
                 switch (input)
                 {
@@ -88,7 +88,7 @@ namespace ExpenseManager
             Console.Write($"Your entry note (can be empty): ");
             var note = Console.ReadLine();
 
-            var entry = EntryRepository.CreateEntry(note, amountInt, 
+            var entry = EntryRepository.CreateEntry(note ?? "", amountInt, 
                 categories[categoryInt - 1].Id, type);
             if (entry == null)
             {
@@ -150,7 +150,7 @@ namespace ExpenseManager
 
             Console.Write($"Your new category name: ");
             var name = Console.ReadLine();
-            if (name == "")
+            if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Category name cannot be empty");
                 Console.WriteLine("Category adding aborted");
