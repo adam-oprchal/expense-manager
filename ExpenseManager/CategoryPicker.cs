@@ -25,7 +25,7 @@ namespace ExpenseManager
             if (!Int32.TryParse(category, out int categoryInt) || categoryInt <= 0 
                 || categoryInt > categories.Count)
             {
-                Console.WriteLine($"Incorrect category");
+                Console.WriteLine("Incorrect category");
                 return null;
             }
 

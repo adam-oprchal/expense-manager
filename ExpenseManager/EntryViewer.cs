@@ -59,6 +59,26 @@ namespace ExpenseManager
             PrintEntries(entries);
         }
 
+        private static void ViewAllEntriesFilteredMonth(List<Entry> entries)
+        {
+            Console.WriteLine("Pick month: 1 = January, 12 = December");
+            Console.Write("Month: ");
+
+            var month = Console.ReadLine();
+            if (!Int32.TryParse(month, out int monthInt) || monthInt <= 0 
+                || monthInt > 12)
+            {
+                Console.WriteLine("Incorrect month");
+                return;
+            }
+
+            entries = entries
+                .Where(e => e.DateTime.Month == monthInt)
+                .ToList();
+
+            PrintEntries(entries);
+        }
+
         public static void ViewAllEntriesFiltered(string username)
         {
             Console.WriteLine();
@@ -84,7 +104,7 @@ namespace ExpenseManager
                     ViewAllEntriesFilteredCategory(username, entries);
                     break;
                 case "2":
-                    Console.WriteLine($"{filter}");
+                    ViewAllEntriesFilteredMonth(entries);
                     break;
                 case "3":
                     Console.WriteLine($"{filter}");
