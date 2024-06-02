@@ -79,6 +79,24 @@ namespace ExpenseManager
             PrintEntries(entries);
         }
 
+        private static void ViewAllEntriesFilteredYear(List<Entry> entries)
+        {
+            Console.Write("Pick year: ");
+
+            var year = Console.ReadLine();
+            if (!Int32.TryParse(year, out int yearInt))
+            {
+                Console.WriteLine("Incorrect year");
+                return;
+            }
+
+            entries = entries
+                .Where(e => e.DateTime.Year == yearInt)
+                .ToList();
+
+            PrintEntries(entries);
+        }
+
         public static void ViewAllEntriesFiltered(string username)
         {
             Console.WriteLine();
@@ -107,7 +125,7 @@ namespace ExpenseManager
                     ViewAllEntriesFilteredMonth(entries);
                     break;
                 case "3":
-                    Console.WriteLine($"{filter}");
+                    ViewAllEntriesFilteredYear(entries);
                     break;
                 default:
                     Console.WriteLine("Incorrect filter");
