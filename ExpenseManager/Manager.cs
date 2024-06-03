@@ -51,6 +51,9 @@ namespace ExpenseManager
                     case "export-data":
                         Exporter.Export(username);
                         break;
+                    case "import-data":
+                        Importer.Import(username);
+                        break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");
                         break;
