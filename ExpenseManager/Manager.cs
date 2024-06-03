@@ -24,6 +24,8 @@ namespace ExpenseManager
                 Console.WriteLine("  add-category");
                 Console.WriteLine("  view-all-entries");
                 Console.WriteLine("  view-all-entries-filtered");
+                Console.WriteLine("  export-data");
+                Console.WriteLine("  import-data");
                 Console.WriteLine("  log-out");
 
                 Console.Write($"[{username}]> ");
@@ -45,6 +47,9 @@ namespace ExpenseManager
                         break;
                     case "view-all-entries-filtered":
                         EntryViewer.ViewAllEntriesFiltered(username);
+                        break;
+                    case "export-data":
+                        Exporter.Export(username);
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");

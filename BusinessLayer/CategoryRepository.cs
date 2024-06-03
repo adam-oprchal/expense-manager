@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer
 {
@@ -12,6 +13,7 @@ namespace BusinessLayer
                 {
                     return db.Categories
                         .Where(c => c.Username == username)
+                        .Include(c => c.Entries)
                         .ToList();
                 } catch
                 {
