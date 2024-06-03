@@ -52,7 +52,7 @@ namespace ExpenseManager
                         Exporter.Export(username);
                         break;
                     case "import-data":
-                        Importer.Import(username);
+                        Importer.Import(username).Wait();
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");

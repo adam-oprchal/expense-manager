@@ -7,7 +7,7 @@ namespace ExpenseManager
 {
     public static class Importer
     {
-        public static void Import(string username)
+        public static async Task Import(string username)
         {
             Console.WriteLine();
 
@@ -35,31 +35,30 @@ namespace ExpenseManager
                 Converters = { new JsonStringEnumConverter() }
             };
 
-            using (StreamReader sr = new StreamReader(file))
+            using FileStream openStream = File.OpenRead(file);
+            List<Category> categories;
+            try
             {
-                var s = sr.ReadToEnd();
-
-                List<Category> categories;
-                try
-                {
-                    categories = JsonSerializer.Deserialize<List<Category>>(s, options);
-                } catch
-                {
-                    Console.WriteLine("Invalid file");
-                    return;
-                }
-
-                if (categories == null)
-                {
-                    Console.WriteLine("Invalid file");
-                    return;
-                }
-
-                if (!CategoryRepository.ImportCategories(username, categories))
-                {
-                    Console.WriteLine("Sorry, something went wrong on our side");
-                }
+                categories = await JsonSerializer.
+                    DeserializeAsync<List<Category>>(openStream, options);
+            } catch
+            {
+                Console.WriteLine("Invalid file");
+                return;
             }
+
+            if (categories == null)
+            {
+                Console.WriteLine("Invalid file");
+                return;
+            }
+
+            if (!CategoryRepository.ImportCategories(username, categories))
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                return;
+            }
+            Console.WriteLine("Data successfully imported");
         }
     }
 }
