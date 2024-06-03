@@ -39,5 +39,29 @@ namespace BusinessLayer
                 }
             }
         }
+
+        public static bool ImportCategories(string username, List<Category> categories)
+        {
+            foreach (var category in categories)
+            {
+                category.Username = username;
+            }
+
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    db.Categories.RemoveRange(
+                        db.Categories.Where(c => c.Username == username));
+
+                    db.Categories.AddRange(categories);
+                    db.SaveChanges();
+                    return true;
+                } catch
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

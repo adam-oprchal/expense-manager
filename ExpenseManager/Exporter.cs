@@ -8,6 +8,8 @@ namespace ExpenseManager
     {
         public static void Export(string username)
         {
+            Console.WriteLine();
+
             var categories = CategoryRepository.ReadAllCategories(username);
             if (categories == null)
             {
