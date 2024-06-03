@@ -49,7 +49,10 @@ namespace ExpenseManager
                         EntryViewer.ViewAllEntriesFiltered(username);
                         break;
                     case "export-data":
-                        Exporter.Export(username);
+                        Exporter.Export(username)
+                            .ContinueWith(t => { 
+                                Console.WriteLine("\nSorry, something went wrong with the export"); 
+                            }, TaskContinuationOptions.OnlyOnFaulted);
                         break;
                     case "import-data":
                         Importer.Import(username).Wait();

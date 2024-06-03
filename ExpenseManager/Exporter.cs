@@ -6,7 +6,7 @@ namespace ExpenseManager
 {
     public static class Exporter
     {
-        public static async void Export(string username)
+        public static async Task Export(string username)
         {
             Console.WriteLine();
 
@@ -24,7 +24,7 @@ namespace ExpenseManager
                 Converters = { new JsonStringEnumConverter() }
             };
 
-            Console.WriteLine($"Began serializing to {username}.json");
+            Console.WriteLine($"Began exporting to {username}.json");
             await using FileStream createStream = File.Create(username + ".json");
             await JsonSerializer.SerializeAsync(createStream, categories, options);
         }
