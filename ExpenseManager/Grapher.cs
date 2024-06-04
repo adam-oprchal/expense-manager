@@ -21,6 +21,7 @@ namespace ExpenseManager
 
             PlotPieChart(EntryType.Income, categories);
             PlotPieChart(EntryType.Expense, categories);
+            PlotBar(categories);
 
             Console.WriteLine("Successfully created and exported basic plots!");
         }
@@ -48,6 +49,34 @@ namespace ExpenseManager
             plot.Add.Annotation($"Total {entryType} by Category");
 
             plot.SavePng($"pie{entryType}.png", 600, 600);
+        }
+
+        private static void PlotBar(List<Category> categories)
+        {
+            ScottPlot.Plot plot = new ScottPlot.Plot();
+
+            var bars1 = plot.Add.Bars(
+                [0],
+                [ categories
+                .SelectMany(c => c.Entries)
+                .Where(e => e.Type == EntryType.Income)
+                .Select(e => e.Amount)
+                .Sum() ]);
+            bars1.LegendText = "Income";
+
+            var bars2 = plot.Add.Bars( 
+                [1],
+                [ categories
+                .SelectMany(c => c.Entries)
+                .Where(e => e.Type == EntryType.Expense)
+                .Select(e => e.Amount)
+                .Sum() ]);
+            bars2.LegendText = "Expense";
+
+            plot.ShowLegend();
+            plot.Add.Annotation($"Total Income and Expense");
+
+            plot.SavePng($"totalBarPlot.png", 600, 600);
         }
 
         private static Color RandomColor()
