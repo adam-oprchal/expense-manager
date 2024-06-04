@@ -26,6 +26,7 @@ namespace ExpenseManager
                 Console.WriteLine("  view-all-entries-filtered");
                 Console.WriteLine("  export-data");
                 Console.WriteLine("  import-data");
+                Console.WriteLine("  show-statistics");
                 Console.WriteLine("  log-out");
 
                 Console.Write($"[{username}]> ");
@@ -56,6 +57,9 @@ namespace ExpenseManager
                         break;
                     case "import-data":
                         Importer.Import(username).Wait();
+                        break;
+                    case "show-statistics":
+                        Grapher.ExportStatistics(username);
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");
