@@ -24,6 +24,7 @@ namespace ExpenseManager
             PlotBar(categories);
 
             Console.WriteLine("Successfully created and exported basic plots!");
+            Console.WriteLine("Created: pieIncome.png, pieExpense.png and totalBarPlot.png");
         }
 
         private static void PlotPieChart(EntryType entryType, List<Category> categories)
@@ -74,9 +75,9 @@ namespace ExpenseManager
             bars2.LegendText = "Expense";
 
             plot.ShowLegend();
-            plot.Add.Annotation($"Total Income and Expense");
+            plot.Add.Annotation("Total Income and Expense");
 
-            plot.SavePng($"totalBarPlot.png", 600, 600);
+            plot.SavePng("totalBarPlot.png", 600, 600);
         }
 
         private static Color RandomColor()
