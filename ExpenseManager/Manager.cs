@@ -92,7 +92,7 @@ namespace ExpenseManager
                 return;
             }
 
-            var category = CategoryPicker.PickCategory(username);
+            var category = Picker.PickCategory(username);
             if (category == null)
             {
                 Console.WriteLine($"{type} adding aborted");
@@ -157,7 +157,7 @@ namespace ExpenseManager
         {
             Console.WriteLine();
 
-            var category = CategoryPicker.PickCategory(username);
+            var category = Picker.PickCategory(username);
             if (category == null)
             {
                 Console.WriteLine("Category deletion aborted");

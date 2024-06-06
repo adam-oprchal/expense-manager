@@ -50,7 +50,7 @@ namespace ExpenseManager
         private static void ViewAllEntriesFilteredCategory(
             string username, List<Entry> entries)
         {
-            var category = CategoryPicker.PickCategory(username);
+            var category = Picker.PickCategory(username);
             if (category == null) return;
 
             entries = entries
