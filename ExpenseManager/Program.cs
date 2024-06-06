@@ -46,9 +46,9 @@ namespace ExpenseManager
             Console.Write("Username: ");
             var username = Console.ReadLine();
             Console.Write("Password: ");
-            var password = Console.ReadLine();
+            var password = PasswordReader.Read();
 
-            if (username == null || password == null)
+            if (username == null)
             {
                 Console.WriteLine("Incorrect username or password");
                 return;
@@ -79,10 +79,19 @@ namespace ExpenseManager
             }
 
             Console.Write("Choose your password: ");
-            var password = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(password))
+            var password = PasswordReader.Read();
+            if (password == "")
             {
                 Console.WriteLine("Password cannot be empty");
+                Console.WriteLine("Aborting registration");
+                return;
+            }
+
+            Console.Write("Repeat password: ");
+            var passwordAgain = PasswordReader.Read();
+            if (password != passwordAgain)
+            {
+                Console.WriteLine("Passwords don't match");
                 Console.WriteLine("Aborting registration");
                 return;
             }
