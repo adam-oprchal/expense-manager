@@ -9,14 +9,15 @@ namespace ExpenseManager
         private static void PrintEntries(List<Entry> entries)
         {
             Console.WriteLine("Your current entries: ");
-            Console.WriteLine($"{"Type", -15} {"Category", -15} {"Amount", 10}   {"Note"}");
-            Console.WriteLine("==========================================================");
+            Console.WriteLine($"{"Type", -15} {"Category", -15} {"Date", -10} {"Amount", 10}   {"Note"}");
+            Console.WriteLine("=============================================================");
             foreach (var entry in entries)
             {
                 Console.WriteLine($"{entry.Type, -15} {entry.Category.Name, -15} " +
-                    $"{entry.Amount, 10}   {entry.Note}");
+                    $"{entry.DateTime.ToString("yyyy-MM-dd")} {entry.Amount, 10}   " +
+                    $"{entry.Note}");
             }
-            Console.WriteLine("==========================================================");
+            Console.WriteLine("=============================================================");
 
             var income = entries
                 .Where(e => e.Type == EntryType.Income)
@@ -27,10 +28,10 @@ namespace ExpenseManager
                 .Select(e => e.Amount)
                 .Sum();
 
-            Console.WriteLine($"Total income: {income, 28}");
-            Console.WriteLine($"Total expenses: {expense, 26}");
-            Console.WriteLine("==========================================================");
-            Console.WriteLine($"Total balance: {income - expense, 27}");
+            Console.WriteLine($"Total income: {income, 39}");
+            Console.WriteLine($"Total expenses: {expense, 37}");
+            Console.WriteLine("=============================================================");
+            Console.WriteLine($"Total balance: {income - expense, 38}");
         }
 
         public static void ViewAllEntries(string username)
