@@ -40,6 +40,22 @@ namespace BusinessLayer
             }
         }
 
+        public static Category DeleteCategory(Category category)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var res = db.Categories.Remove(category);
+                    db.SaveChanges();
+                    return res.Entity;
+                } catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static bool ImportCategories(string username, List<Category> categories)
         {
             foreach (var category in categories)

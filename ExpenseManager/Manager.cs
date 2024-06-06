@@ -22,6 +22,7 @@ namespace ExpenseManager
                 Console.WriteLine("  add-expense");
                 Console.WriteLine("  add-income");
                 Console.WriteLine("  add-category");
+                Console.WriteLine("  delete-category");
                 Console.WriteLine("  view-all-entries");
                 Console.WriteLine("  view-all-entries-filtered");
                 Console.WriteLine("  export-data");
@@ -43,6 +44,9 @@ namespace ExpenseManager
                         break;
                     case "add-category":
                         AddCategory();
+                        break;
+                    case "delete-category":
+                        DeleteCategory();
                         break;
                     case "view-all-entries":
                         EntryViewer.ViewAllEntries(username);
@@ -147,6 +151,27 @@ namespace ExpenseManager
             }
 
             Console.WriteLine("Category successfully added");
+        }
+
+        private void DeleteCategory()
+        {
+            Console.WriteLine();
+
+            var category = CategoryPicker.PickCategory(username);
+            if (category == null)
+            {
+                Console.WriteLine("Category deletion aborted");
+                return;
+            }
+
+            if (CategoryRepository.DeleteCategory(category) == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Category deletion aborted");
+                return;
+            }
+
+            Console.WriteLine("Category successfully deleted");
         }
 
         private bool DeleteAccount()
