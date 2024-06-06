@@ -27,6 +27,22 @@ namespace BusinessLayer
             }
         }
 
+        public static User DeleteUser(string username)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var res = db.Users.Remove(ReadUser(username));
+                    db.SaveChanges();
+                    return res.Entity;
+                } catch 
+                {
+                    return null;
+                }
+            }
+        }
+
         public static User ReadUser(string username)
         {
             using ( var db = new ExpenseDbContext())

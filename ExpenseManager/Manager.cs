@@ -27,6 +27,7 @@ namespace ExpenseManager
                 Console.WriteLine("  export-data");
                 Console.WriteLine("  import-data");
                 Console.WriteLine("  show-statistics");
+                Console.WriteLine("  delete-account");
                 Console.WriteLine("  log-out");
 
                 Console.Write($"[{username}]> ");
@@ -60,6 +61,9 @@ namespace ExpenseManager
                         break;
                     case "show-statistics":
                         Grapher.ExportStatistics(username);
+                        break;
+                    case "delete-account":
+                        if (DeleteAccount()) return;
                         break;
                     case "log-out":
                         Console.WriteLine($"Goodbye, {username}!");
@@ -143,6 +147,28 @@ namespace ExpenseManager
             }
 
             Console.WriteLine("Category successfully added");
+        }
+
+        private bool DeleteAccount()
+        {
+            Console.WriteLine("WARNING: this action will delete all your current data");
+            Console.WriteLine("If you want to continue, type YES");
+            var choice = (Console.ReadLine() ?? "").Trim();
+            if (choice != "YES")
+            {
+                Console.WriteLine("Deletion aborted");
+                return false;
+            }
+
+            if (UserRepository.DeleteUser(username) == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Deletion aborted");
+                return false;
+            }
+
+            Console.WriteLine("Successfully deleted your account!");
+            return true;
         }
     }
 }
