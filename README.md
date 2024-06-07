@@ -8,3 +8,4 @@ Features:
 - add expense/income
 - categorize each expense/income
 - view current account state
+- and much more!
