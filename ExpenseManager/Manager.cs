@@ -77,7 +77,10 @@ namespace ExpenseManager
                             }, TaskContinuationOptions.OnlyOnFaulted);
                         break;
                     case "import-data":
-                        Importer.Import(username).Wait();
+                        Importer.Import(username)
+                            .ContinueWith(t => { 
+                                Console.WriteLine("\nSorry, something went wrong with the import"); 
+                            }, TaskContinuationOptions.OnlyOnFaulted);
                         break;
                     case "show-statistics":
                         Grapher.ExportStatistics(username);

@@ -35,30 +35,15 @@ namespace ExpenseManager
                 Converters = { new JsonStringEnumConverter() }
             };
 
+            Console.WriteLine($"Began importing from {file}");
             using FileStream openStream = File.OpenRead(file);
-            List<Category> categories;
-            try
-            {
-                categories = await JsonSerializer.
+            List<Category> categories = await JsonSerializer.
                     DeserializeAsync<List<Category>>(openStream, options);
-            } catch
-            {
-                Console.WriteLine("Invalid file");
-                return;
-            }
-
-            if (categories == null)
-            {
-                Console.WriteLine("Invalid file");
-                return;
-            }
 
             if (!CategoryRepository.ImportCategories(username, categories))
             {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                return;
+                throw new Exception();
             }
-            Console.WriteLine("Data successfully imported");
         }
     }
 }
