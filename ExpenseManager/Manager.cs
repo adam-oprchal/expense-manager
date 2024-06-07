@@ -56,13 +56,13 @@ namespace ExpenseManager
                         EntryController.DeleteEntry(username);
                         break;
                     case "add-category":
-                        AddCategory();
+                        CategoryController.AddCategory(username);
                         break;
                     case "edit-category":
-                        EditCategory();
+                        CategoryController.EditCategory(username);
                         break;
                     case "delete-category":
-                        DeleteCategory();
+                        CategoryController.DeleteCategory(username);
                         break;
                     case "view-all-entries":
                         EntryViewer.ViewAllEntries(username);
@@ -93,81 +93,6 @@ namespace ExpenseManager
                         break;
                 }
             } while (input != "log-out");
-        }
-
-        private void AddCategory()
-        {
-            Console.WriteLine();
-
-            Console.Write($"Your new category name: ");
-            var name = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Console.WriteLine("Category name cannot be empty");
-                Console.WriteLine("Category adding aborted");
-                return;
-            }
-
-            var category = CategoryRepository.CreateCategory(name, username);
-            if (category == null)
-            {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                Console.WriteLine("Category adding aborted");
-                return;
-            }
-
-            Console.WriteLine("Category successfully added");
-        }
-
-        private void EditCategory()
-        {
-            Console.WriteLine();
-
-            var category = Picker.PickCategory(username);
-            if (category == null)
-            {
-                Console.WriteLine("Category edit aborted");
-                return;
-            }
-
-            Console.Write("New name of this category: ");
-            var newName = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(newName))
-            {
-                Console.WriteLine("Category name cannot be empty");
-                Console.WriteLine("Category edit aborted");
-                return;
-            }
-
-            if (CategoryRepository.UpdateCategory(category, newName) == null)
-            {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                Console.WriteLine("Category edit aborted");
-                return;
-            }
-
-            Console.WriteLine("Category successfully edited");
-        }
-
-        private void DeleteCategory()
-        {
-            Console.WriteLine();
-
-            var category = Picker.PickCategory(username);
-            if (category == null)
-            {
-                Console.WriteLine("Category deletion aborted");
-                return;
-            }
-
-            if (CategoryRepository.DeleteCategory(category) == null)
-            {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                Console.WriteLine("Category deletion aborted");
-                return;
-            }
-
-            Console.WriteLine("Category successfully deleted");
         }
 
         private bool DeleteAccount()
