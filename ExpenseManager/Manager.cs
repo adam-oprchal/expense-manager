@@ -23,6 +23,7 @@ namespace ExpenseManager
                 Console.WriteLine("  add-income");
                 Console.WriteLine("  delete-entry");
                 Console.WriteLine("  add-category");
+                Console.WriteLine("  edit-category");
                 Console.WriteLine("  delete-category");
                 Console.WriteLine("  view-all-entries");
                 Console.WriteLine("  view-all-entries-filtered");
@@ -48,6 +49,9 @@ namespace ExpenseManager
                         break;
                     case "add-category":
                         AddCategory();
+                        break;
+                    case "edit-category":
+                        EditCategory();
                         break;
                     case "delete-category":
                         DeleteCategory();
@@ -143,26 +147,11 @@ namespace ExpenseManager
         {
             Console.WriteLine();
 
-            var categories = CategoryRepository.ReadAllCategories(username);
-            if (categories == null)
-            {
-                Console.WriteLine("Sorry, something went wrong on our side");
-                Console.WriteLine("Category adding aborted");
-                return;
-            }
-
             Console.Write($"Your new category name: ");
             var name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Category name cannot be empty");
-                Console.WriteLine("Category adding aborted");
-                return;
-            }
-
-            if (categories.Select(c => c.Name).Contains(name))
-            {
-                Console.WriteLine("Category name is already in use");
                 Console.WriteLine("Category adding aborted");
                 return;
             }
@@ -176,6 +165,36 @@ namespace ExpenseManager
             }
 
             Console.WriteLine("Category successfully added");
+        }
+
+        private void EditCategory()
+        {
+            Console.WriteLine();
+
+            var category = Picker.PickCategory(username);
+            if (category == null)
+            {
+                Console.WriteLine("Category edit aborted");
+                return;
+            }
+
+            Console.Write("New name of this category: ");
+            var newName = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                Console.WriteLine("Category name cannot be empty");
+                Console.WriteLine("Category edit aborted");
+                return;
+            }
+
+            if (CategoryRepository.UpdateCategory(category, newName) == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Category edit aborted");
+                return;
+            }
+
+            Console.WriteLine("Category successfully edited");
         }
 
         private void DeleteCategory()

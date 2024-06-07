@@ -56,6 +56,23 @@ namespace BusinessLayer
             }
         }
 
+        public static Category UpdateCategory(Category category, string newName)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var res = db.Categories.Single(c => c == category);
+                    res.Name = newName;
+                    db.SaveChanges();
+                    return res;
+                } catch
+                {
+                    return null;
+                }
+            }
+        }
+        
         public static bool ImportCategories(string username, List<Category> categories)
         {
             foreach (var category in categories)
