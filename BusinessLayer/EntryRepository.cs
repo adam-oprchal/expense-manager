@@ -25,6 +25,22 @@ namespace BusinessLayer
             }
         }
 
+        public static Entry DeleteEntry(Entry entry)
+        {
+            using (var db = new ExpenseDbContext())
+            {
+                try
+                {
+                    var res = db.Entries.Remove(entry);
+                    db.SaveChanges();
+                    return res.Entity;
+                } catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static List<Entry> ReadAllEntries(string username)
         {
             using (var db = new ExpenseDbContext())

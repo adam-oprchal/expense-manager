@@ -14,6 +14,12 @@ namespace ExpenseManager
                 return null;
             }
 
+            if (categories.Count == 0)
+            {
+                Console.WriteLine("You have no categories!");
+                return null;
+            }
+
             Console.WriteLine("Your categories: ");
             for (int i = 0;  i < categories.Count; i++)
             {
@@ -32,12 +38,18 @@ namespace ExpenseManager
             return categories.ElementAt(categoryInt - 1);
         }
 
-        public static Entry EntryPicker(string username)
+        public static Entry PickEntry(string username)
         {
             var entries = EntryRepository.ReadAllEntries(username);
             if (entries == null)
             {
                 Console.WriteLine("Sorry, something went wrong on our side");
+                return null;
+            }
+
+            if (entries.Count == 0)
+            {
+                Console.WriteLine("You have no entries!");
                 return null;
             }
 

@@ -21,6 +21,7 @@ namespace ExpenseManager
                 Console.WriteLine("Choose your action: ");
                 Console.WriteLine("  add-expense");
                 Console.WriteLine("  add-income");
+                Console.WriteLine("  delete-entry");
                 Console.WriteLine("  add-category");
                 Console.WriteLine("  delete-category");
                 Console.WriteLine("  view-all-entries");
@@ -41,6 +42,9 @@ namespace ExpenseManager
                         break;
                     case "add-income":
                         AddEntry(EntryType.Income);
+                        break;
+                    case "delete-entry":
+                        DeleteEntry();
                         break;
                     case "add-category":
                         AddCategory();
@@ -112,6 +116,27 @@ namespace ExpenseManager
             }
 
             Console.WriteLine($"{type} successfully added");
+        }
+
+        private void DeleteEntry()
+        {
+            Console.WriteLine();
+
+            var entry = Picker.PickEntry(username);
+            if (entry == null)
+            {
+                Console.WriteLine("Entry deletion aborted");
+                return;
+            }
+
+            if (EntryRepository.DeleteEntry(entry) == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Entry deletion aborted");
+                return;
+            }
+
+            Console.WriteLine("Entry successfully deleted");
         }
 
         private void AddCategory()
