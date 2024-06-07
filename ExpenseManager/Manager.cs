@@ -21,15 +21,20 @@ namespace ExpenseManager
                 Console.WriteLine("Choose your action: ");
                 Console.WriteLine("  add-expense");
                 Console.WriteLine("  add-income");
+                Console.WriteLine("  edit-entry");
                 Console.WriteLine("  delete-entry");
+                Console.WriteLine();
                 Console.WriteLine("  add-category");
                 Console.WriteLine("  edit-category");
                 Console.WriteLine("  delete-category");
+                Console.WriteLine();
                 Console.WriteLine("  view-all-entries");
                 Console.WriteLine("  view-all-entries-filtered");
+                Console.WriteLine();
                 Console.WriteLine("  export-data");
                 Console.WriteLine("  import-data");
                 Console.WriteLine("  show-statistics");
+                Console.WriteLine();
                 Console.WriteLine("  delete-account");
                 Console.WriteLine("  log-out");
 
@@ -43,6 +48,9 @@ namespace ExpenseManager
                         break;
                     case "add-income":
                         AddEntry(EntryType.Income);
+                        break;
+                    case "edit-entry":
+                        EditEntry();
                         break;
                     case "delete-entry":
                         DeleteEntry();
@@ -120,6 +128,39 @@ namespace ExpenseManager
             }
 
             Console.WriteLine($"{type} successfully added");
+        }
+
+        private void EditEntry()
+        {
+            Console.WriteLine();
+
+            var entry = Picker.PickEntry(username);
+            if (entry == null)
+            {
+                Console.WriteLine("Entry edit aborted");
+                return;
+            }
+
+            Console.Write("New entry amount: ");
+            var amount = Console.ReadLine();
+            if (!Int32.TryParse(amount, out int amountInt) || amountInt <= 0)
+            {
+                Console.WriteLine("Entry amount has to be a positive integer");
+                Console.WriteLine("Entry edit aborted");
+                return;
+            }
+
+            Console.Write("Your new entry note (can be empty): ");
+            var note = Console.ReadLine();
+
+            if (EntryRepository.UpdateEntry(entry, note ?? "", amountInt) == null)
+            {
+                Console.WriteLine("Sorry, something went wrong on our side");
+                Console.WriteLine("Entry edit aborted");
+                return;
+            }
+
+            Console.WriteLine("Entry successfully edited");
         }
 
         private void DeleteEntry()
