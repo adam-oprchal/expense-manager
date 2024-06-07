@@ -9,3 +9,6 @@ Features:
 - categorize each expense/income
 - view current account state
 - and much more!
+
+This project uses Entity Framework Core and ScottPlot NuGet packages
+
